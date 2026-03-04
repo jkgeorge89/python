@@ -129,12 +129,14 @@ Monte Carlo methods produce estimates subject to simulation noise, with standard
 
 At 1,000,000 simulations the confidence interval of **±USD 0.7M** is below any practical materiality threshold relative to a ~USD 44M net value, and represents a conventional stopping point from a statistical standpoint. Further increases in simulation count yield diminishing precision improvements that are not meaningful in the context of the broader valuation uncertainty (principally the asset volatility assumption).
 
-### 3.3 What the Model Does Not Capture
+### 3.4 Model Scope and Limitations
 
-- **FX risk** across CCBA's 14 African operating markets (USD-denominated payoff; operational FX embedded in equity value volatility)
-- **Regulatory/antitrust conditionality** on exercise (the agreement contains suspension provisions; not modelled)
-- **Liquidity discount** on the minority stake
-- **TCCC's optimal exercise strategy** relative to CCHBC (modelled independently; cross-party game theory not captured)
+| Risk Factor | Captured? | Approach |
+|---|---|---|
+| FX risk (14 African markets) | No | USD-denominated payoff; operational FX embedded in equity volatility assumption |
+| Regulatory/antitrust conditionality | **Acknowledged — not applied** | Theoretical only; see §4.3 and Project_Horizon_Regulatory_Risk.md |
+| Non-marketability of the option | **Yes — applied** | DLOM per Longstaff (1995) per §4.3 |
+| TCCC optimal exercise (cross-party) | No | Modelled independently; Dynkin game theory not captured |
 
 ---
 
@@ -155,7 +157,7 @@ The net position is positive for CCHBC, reflecting:
 2. The marginally higher call coupon in years 3–5 (4.20% vs 4.10%), which makes the call strike slightly more favourable relative to the put strike at any given exercise date in the overlap period
 3. Higher risk-free rate benefits call holders (higher drift) more than it hurts put holders, since the call has a shorter maximum duration
 
-### 4.2 Sensitivity Analysis
+### 4.2 Sensitivity Analysis — Volatility and Rate
 
 Net value to CCHBC (USD millions) across asset volatility and risk-free rate scenarios. Base case marked *.
 
@@ -172,15 +174,60 @@ Net value to CCHBC (USD millions) across asset volatility and risk-free rate sce
 - **Asset volatility has secondary impact** on the net — higher vol increases both call and put roughly proportionally; at the base rf of 4.929% the net is relatively stable across the vol range ($40–50M).
 - The net is **positive across all scenarios at rf ≥ 4.929%**. It turns negative only at rf ~3.5% or below, which would require a material decline from current USD rates.
 
+### 4.3 Extended Model: DLOM
+
+#### Discount for Lack of Marketability (DLOM) — Longstaff (1995)
+
+The option is a private bilateral instrument between TCCC and CCHBC. Unlike a listed option, it cannot be sold, transferred, or hedged in a secondary market. **Longstaff (1995)** shows that the upper bound on this illiquidity cost equals the value of a **floating-strike lookback put** — the right to sell at the highest price achieved over the restriction period T:
+
+$$\text{DLOM}(\%) = \frac{E\left[e^{-rT}\left(\max_{0 \leq t \leq T} S_t - S_T\right)\right]}{S_0}$$
+
+Computed via Monte Carlo over the existing 1M paths at three restriction periods:
+
+| Restriction Period T | DLOM (%) |
+|---|---|
+| 3 years (earliest call exercise) | 18.7% |
+| **4 years — central estimate** | **21.1%** |
+| 5 years (latest call exercise) | 23.1% |
+
+The central estimate of **21.1%** (T = 4 years, midpoint of call window) is applied below.
+
+#### DLOM Results
+
+| Model | Call ($/sh) | Put ($/sh) | Net ($/sh) | Net ($M) |
+|---|---|---|---|---|
+| **LSM — Marketable baseline** | 118.18 | 86.66 | 31.52 | **43.7** |
+| **LSM — Non-Marketable (DLOM 21.1%, T=4yr)** | 93.23 | 68.37 | 24.86 | **34.5** |
+| LSM — Non-Marketable (DLOM 18.7%, T=3yr) | 96.14 | 70.47 | 25.67 | 35.6 |
+| LSM — Non-Marketable (DLOM 23.1%, T=5yr) | 90.87 | 66.59 | 24.28 | 33.7 |
+
+The DLOM reduces net value by approximately **USD 9M (~21%)**, from USD 43.7M to **USD 34.5M** at the central estimate, with a range of USD 33.7M–35.6M across restriction period assumptions.
+
+#### Note on Regulatory Risk
+
+The Option Agreement contains a **12-month cap** on obtaining merger control approvals for the option exercise (Clause 3.2 / L62). If approvals are not obtained within 12 months, the exercise lapses. This creates a theoretical regulatory timing risk.
+
+However, on analysis this risk is assessed as **not material enough to quantify or apply as a valuation adjustment**, for the following reasons:
+
+1. **The COMESA conduct investigation targets passive sales restrictions** — a minor amendment to the franchise agreement (adding a passive sales carve-out) is the expected outcome, consistent with the Heineken and Diageo precedents. This does not impair CCBA's core territorial exclusivity or franchise economics.
+
+2. **TCCC has fully aligned economic incentives post-close.** As an indirect 25% owner with a structured put option stepping up annually at 2.75–4.10%, TCCC has every incentive to settle the conduct case quickly and cleanly, and to cooperate on obtaining regulatory approvals for the option exercise.
+
+3. **The 12-month cap covers a second-step merger filing** — once the conduct case is resolved (the most likely state at Year 3–5), this is a routine step-up merger notification. There is no basis to assume COMESA would treat it as contested.
+
+The theoretical risk is acknowledged and documented in *Project_Horizon_Regulatory_Risk.md*. It is not applied as a deduction to the option fair value.
+
 ---
 
 ## 5. Conclusion
 
-At a USD risk-free rate of 4.929% and asset volatility of 20.0%, the structured option instrument has a **net fair value to CCHBC of approximately USD 44 million** (USD 164M call asset less USD 120M put liability), based on the 25% stake in CCBA with a total equity value of USD 3.2bn at SPA Completion. The estimate carries a simulation standard error of ±USD 0.7M (95% confidence interval) at 1,000,000 paths, which is below any practical materiality threshold.
+At a USD risk-free rate of 4.929% and asset volatility of 20.0%, the structured option instrument has a **gross fair value to CCHBC of approximately USD 44 million** on a marketable basis (USD 164M call asset less USD 120M put liability). The simulation standard error is ±USD 0.7M (95% CI at 1,000,000 paths), below any practical materiality threshold.
 
-The valuation is robust across the sensitivity range tested. The primary risk to the net value is a significant reduction in USD risk-free rates.
+Applying the DLOM adjustment for non-marketability of the instrument (21.1%, Longstaff 1995, T = 4 years central estimate), the **primary net value estimate is approximately USD 34.5 million**, with a range of **USD 33.7M – 35.6M** across restriction period assumptions.
 
-All key economic terms — exercise windows, coupon schedule, share count — are sourced directly from the Option Agreement. The only judgement inputs are the SPA equity value (agreed deal consideration), the USD risk-free rate (Bloomberg), and the asset volatility (KO bottler peer analysis, Capital IQ).
+A theoretical regulatory timing risk exists — the Option Agreement contains a 12-month cap on obtaining merger control approvals for the option exercise, after which the exercise lapses. On analysis this risk is assessed as not material enough to quantify or apply as a valuation adjustment. The expected COMESA conduct case outcome is a minor franchise amendment (passive sales carve-out) that does not impair core franchise economics; TCCC's 25% ownership post-close creates fully aligned incentives to resolve the conduct case and cooperate on approvals; and the second-step merger filing is expected to be routine once the conduct case is settled. The theoretical risk is acknowledged and documented in *Project_Horizon_Regulatory_Risk.md*.
+
+The valuation is robust to volatility assumptions at the base risk-free rate; the primary market risk to net value is a significant reduction in USD risk-free rates. All key economic terms — exercise windows, coupon schedule, share count — are sourced directly from the Option Agreement. The judgement inputs are the SPA equity value (agreed deal consideration), the USD risk-free rate (Bloomberg), the asset volatility (KO bottler peer analysis, Capital IQ), and the DLOM restriction period (midpoint of call window).
 
 ---
 
