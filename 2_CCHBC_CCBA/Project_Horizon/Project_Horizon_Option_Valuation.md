@@ -1,0 +1,172 @@
+# Project Horizon – Valuation of Structured Option Instrument
+**Prepared for:** [MD Name]
+**Date:** December 31, 2025
+**Subject:** Fair Value Assessment – Call and Put Option over 25% Stake in CCBA
+
+---
+
+## 1. Background and Agreement Summary
+
+In connection with CCHBC's acquisition of a 75% interest in Coca-Cola Beverages Africa ("CCBA"), the Option Agreement governs the treatment of the remaining **25% equity stake** (1,386,020 E ordinary shares) retained by The Coca-Cola Company ("TCCC") at SPA completion.
+
+The agreement is between:
+
+| Party | Legal Entity | Role |
+|---|---|---|
+| **CCHBC** | Coca-Cola HBC Holdings B.V. ("Olympus BV") | Acquiror; granted the **Call Option** |
+| **TCCC** | European Refreshments Unlimited Co. ("Titan"), guaranteed by The Coca-Cola Company | Seller; granted the **Put Option** |
+
+The instrument creates a bilateral option structure: CCHBC has the right to acquire the remaining 25% stake at any time within the Call window; TCCC has the right to force a sale of that same stake at any time within the Put window. The underlying in both cases is the same block of shares, at the same contractually-determined price.
+
+---
+
+## 2. Key Commercial Terms
+
+### 2.1 Option Shares
+- **1,386,020 E ordinary shares**, representing **25% of total equity**
+- Implied value at SPA price: **USD 800 million** (25% × USD 3.2bn total equity consideration)
+
+### 2.2 Exercise Windows
+
+| Option | Holder | Opens | Expires | Duration |
+|---|---|---|---|---|
+| **Call** | CCHBC (Olympus BV) | Year 3 from SPA Completion | Year 5 | 2 years |
+| **Put** | TCCC (Titan) | Year 3.5 from SPA Completion | Year 6 | 2.5 years |
+
+The windows overlap between **Year 3.5 and Year 5** (1.5 years). During this overlap period, both options are simultaneously live. The agreement provides that exercise by either party extinguishes the other's option (the "One Live Notice" mechanism). Outside the overlap:
+
+- **Year 3.0 – 3.5:** Call only — CCHBC may acquire; TCCC has no right to force a sale
+- **Year 3.5 – 5.0:** Overlap — both parties hold live options
+- **Year 5.0 – 6.0:** Put only — Call has expired; TCCC may force a sale
+
+```
+Year:  0────1────2────3───3.5──────5──────────6
+                      │    │        │           │
+CCHBC  (Call)         ├────┼────────┤           │
+TCCC   (Put)          │    ├────────┼───────────┤
+                      │    │        │           │
+                   Call  OVERLAP  Put           │
+                   only  Yr3.5-5  only          │
+                   0.5yr  1.5yr   1yr           │
+```
+
+### 2.3 Strike Price – Applicable Coupon
+
+The strike is not an assumption — it is fully contractually determined. Per the Option Agreement (Schedule 3), the **Purchase Price Per Share** equals the SPA price per share **plus the Applicable Coupon**, defined as interest capitalised annually from SPA Completion Date to (but excluding) the Option Completion Date.
+
+The coupon schedule **steps up over time** and differs between the Call and Put:
+
+| Year | Call Coupon | Put Coupon |
+|---|---|---|
+| 0 – 1 | 2.75% | 2.75% |
+| 1 – 2 | 3.00% | 3.00% |
+| 2 – 3 | 3.00% | 3.00% |
+| 3 – 4 | 4.20% | 4.10% |
+| 4 – 5 | 4.20% | 4.10% |
+| 5 – 6 | n/a | 4.10% |
+
+The call coupon is marginally higher than the put coupon in years 3–5 (4.20% vs 4.10%), reflecting a slight contractual advantage to CCHBC as the call holder. Implied strike values at key dates (based on USD 577.19 SPA price per share):
+
+| Date | Call Strike | Put Strike |
+|---|---|---|
+| Year 3 | USD 629.18 | USD 629.18 |
+| Year 4 | USD 655.61 | USD 654.98 |
+| Year 5 | USD 683.14 | USD 681.83 |
+| Year 6 | — | USD 709.79 |
+
+### 2.4 Simplifying Assumptions
+
+The following items are provided for in the agreement but excluded from this valuation for simplicity, consistent with a clean-value analysis:
+
+- **No Gaia Leakage:** No deduction to the SPA base price
+- **No dividends:** No reduction to the Purchase Price
+- **No SPA Claim Adjustments:** No post-completion price adjustments
+- Equity value at SPA Completion = USD 3.2bn (agreed deal consideration)
+
+---
+
+## 3. Valuation Methodology
+
+### 3.1 Approach – Least-Squares Monte Carlo (LSM)
+
+Both the Call and Put are **Bermudan options** — they are exercisable at any point within a defined window, not solely at expiry. A standard Black-Scholes (European) framework would materially misprice these instruments by ignoring the value of early exercise.
+
+We employ the **Longstaff-Schwartz Least-Squares Monte Carlo ("LSM")** method, which is the market-standard technique for pricing Bermudan and American options. The approach:
+
+1. Simulates a large number of equity value paths under the risk-neutral measure (Geometric Brownian Motion)
+2. At each exercise date within the window, estimates the **continuation value** via cross-sectional regression of discounted future cash flows on current equity value (polynomial basis)
+3. Exercises the option on a given path wherever **intrinsic value exceeds estimated continuation value**
+4. Averages the resulting cash flows, discounted back to valuation date
+
+This correctly captures the strategic optionality of both parties — CCHBC will optimally call early when equity values are high; TCCC will optimally put early when equity values are low.
+
+### 3.2 Key Parameters
+
+| Parameter | Value | Source |
+|---|---|---|
+| Equity value at SPA | USD 3.2bn | Agreed SPA consideration |
+| SPA price per share | USD 577.19 | USD 3.2bn ÷ 5,544,080 total shares |
+| **Asset volatility** | **20.0%** | Unlevered (historical) equity volatility of global KO bottler peers; average per Capital IQ as at 31 December 2025, rounded to nearest 25bps |
+| **Risk-free rate** | **4.929%** | USD risk-free rate per Bloomberg as at valuation date |
+| Simulations | 100,000 paths | — |
+| Time steps | Monthly (12/yr) | — |
+| Drift (risk-neutral) | = Risk-free rate | Standard risk-neutral pricing; no dividend yield |
+
+**On asset volatility:** The σ parameter in the GBM represents forward expected asset volatility. We use **unlevered (asset) volatility** — not raw equity volatility — because the option is written on equity value. Unlevering strips out the amplifying effect of each peer's capital structure, leaving a comparable measure of underlying business risk. The peer set consists of publicly listed Coca-Cola bottlers with global operations. The resulting 20.0% asset volatility is considered appropriate given CCBA's operations, noting that a pure African-market vol assumption would likely be higher; the peer-based approach is a conservative and defensible proxy.
+
+### 3.3 What the Model Does Not Capture
+
+- **FX risk** across CCBA's 14 African operating markets (USD-denominated payoff; operational FX embedded in equity value volatility)
+- **Regulatory/antitrust conditionality** on exercise (the agreement contains suspension provisions; not modelled)
+- **Liquidity discount** on the minority stake
+- **TCCC's optimal exercise strategy** relative to CCHBC (modelled independently; cross-party game theory not captured)
+
+---
+
+## 4. Results
+
+### 4.1 Base Case
+
+*Asset volatility: 20.0% | Risk-free rate: 4.929% | SPA price: USD 577.19/share*
+
+| | Per Share | Total (×1,386,020 shares) |
+|---|---|---|
+| **Call Option Value** (CCHBC asset) | USD 119.57 | **USD 165.7M** |
+| **Put Option Value** (CCHBC liability) | USD 86.50 | **USD 119.9M** |
+| **Net Value to CCHBC** | USD 33.07 | **USD 45.8M** |
+
+The net position is positive for CCHBC, reflecting:
+1. The call's earlier opening (Year 3 vs 3.5) — 0.5 years of exclusive optionality
+2. The marginally higher call coupon in years 3–5 (4.20% vs 4.10%), which makes the call strike slightly more favourable relative to the put strike at any given exercise date in the overlap period
+3. Higher risk-free rate benefits call holders (higher drift) more than it hurts put holders, since the call has a shorter maximum duration
+
+### 4.2 Sensitivity Analysis
+
+Net value to CCHBC (USD millions) across asset volatility and risk-free rate scenarios. Base case marked *.
+
+| Asset Vol | rf = 4.00% | rf = 4.929% | rf = 6.00% |
+|---|---|---|---|
+| 15% | +$14.9M | +$50.1M | +$89.4M |
+| **20%** | +$13.6M | **+$48.1M*** | +$86.5M |
+| 25% | +$7.6M | +$42.5M | +$82.5M |
+| 30% | +$4.6M | +$40.9M | +$75.6M |
+| 35% | +$2.5M | +$39.6M | +$70.8M |
+
+**Key observations:**
+- The **risk-free rate is the dominant driver** — a 1% move in rf shifts net value by ~$35–40M. This is because the put has a longer duration (to Year 6) and is therefore more sensitive to discounting; a higher rf benefits CCHBC as the short-put party.
+- **Asset volatility has secondary impact** on the net — higher vol increases both call and put roughly proportionally; at the base rf of 4.929% the net is relatively stable across the vol range ($40–50M).
+- The net is **positive across all scenarios at rf ≥ 4.929%**. It turns negative only at rf ~3.5% or below, which would require a material decline from current USD rates.
+
+---
+
+## 5. Conclusion
+
+At a USD risk-free rate of 4.929% and asset volatility of 20.0%, the structured option instrument has a **net fair value to CCHBC of approximately USD 46 million** (USD 166M call asset less USD 120M put liability), based on the 25% stake in CCBA with a total equity value of USD 3.2bn at SPA Completion.
+
+The valuation is robust across the sensitivity range tested. The primary risk to the net value is a significant reduction in USD risk-free rates.
+
+All key economic terms — exercise windows, coupon schedule, share count — are sourced directly from the Option Agreement. The only judgement inputs are the SPA equity value (agreed deal consideration), the USD risk-free rate (Bloomberg), and the asset volatility (KO bottler peer analysis, Capital IQ).
+
+---
+
+*This note has been prepared for internal discussion purposes. The model and assumptions are subject to review.*
