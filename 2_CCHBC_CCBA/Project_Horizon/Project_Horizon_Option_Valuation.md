@@ -108,11 +108,26 @@ This correctly captures the strategic optionality of both parties — CCHBC will
 | SPA price per share | USD 577.19 | USD 3.2bn ÷ 5,544,080 total shares |
 | **Asset volatility** | **20.0%** | Unlevered (historical) equity volatility of global KO bottler peers; average per Capital IQ as at 31 December 2025, rounded to nearest 25bps |
 | **Risk-free rate** | **4.929%** | USD risk-free rate per Bloomberg as at valuation date |
-| Simulations | 100,000 paths | — |
+| Simulations | 1,000,000 paths | See convergence analysis in §3.3 |
 | Time steps | Monthly (12/yr) | — |
 | Drift (risk-neutral) | = Risk-free rate | Standard risk-neutral pricing; no dividend yield |
 
 **On asset volatility:** The σ parameter in the GBM represents forward expected asset volatility. We use **unlevered (asset) volatility** — not raw equity volatility — because the option is written on equity value. Unlevering strips out the amplifying effect of each peer's capital structure, leaving a comparable measure of underlying business risk. The peer set consists of publicly listed Coca-Cola bottlers with global operations. The resulting 20.0% asset volatility is considered appropriate given CCBA's operations, noting that a pure African-market vol assumption would likely be higher; the peer-based approach is a conservative and defensible proxy.
+
+### 3.3 Simulation Count and Convergence
+
+Monte Carlo methods produce estimates subject to simulation noise, with standard error scaling as σ/√N. The table below shows the 95% confidence interval on the **net total value to CCHBC** at increasing simulation counts, derived from the observed payoff variance at 1,000,000 paths:
+
+| Simulations | ±95% CI on Net Total Value |
+|---|---|
+| 10,000 | ±USD 7.3M |
+| 50,000 | ±USD 3.3M |
+| 100,000 | ±USD 2.3M |
+| 250,000 | ±USD 1.5M |
+| 500,000 | ±USD 1.0M |
+| **1,000,000** | **±USD 0.7M** |
+
+At 1,000,000 simulations the confidence interval of **±USD 0.7M** is below any practical materiality threshold relative to a ~USD 44M net value, and represents a conventional stopping point from a statistical standpoint. Further increases in simulation count yield diminishing precision improvements that are not meaningful in the context of the broader valuation uncertainty (principally the asset volatility assumption).
 
 ### 3.3 What the Model Does Not Capture
 
@@ -131,9 +146,9 @@ This correctly captures the strategic optionality of both parties — CCHBC will
 
 | | Per Share | Total (×1,386,020 shares) |
 |---|---|---|
-| **Call Option Value** (CCHBC asset) | USD 119.57 | **USD 165.7M** |
-| **Put Option Value** (CCHBC liability) | USD 86.50 | **USD 119.9M** |
-| **Net Value to CCHBC** | USD 33.07 | **USD 45.8M** |
+| **Call Option Value** (CCHBC asset) | USD 118.18 | **USD 163.8M** |
+| **Put Option Value** (CCHBC liability) | USD 86.66 | **USD 120.1M** |
+| **Net Value to CCHBC** | USD 31.52 | **USD 43.7M** |
 
 The net position is positive for CCHBC, reflecting:
 1. The call's earlier opening (Year 3 vs 3.5) — 0.5 years of exclusive optionality
@@ -161,7 +176,7 @@ Net value to CCHBC (USD millions) across asset volatility and risk-free rate sce
 
 ## 5. Conclusion
 
-At a USD risk-free rate of 4.929% and asset volatility of 20.0%, the structured option instrument has a **net fair value to CCHBC of approximately USD 46 million** (USD 166M call asset less USD 120M put liability), based on the 25% stake in CCBA with a total equity value of USD 3.2bn at SPA Completion.
+At a USD risk-free rate of 4.929% and asset volatility of 20.0%, the structured option instrument has a **net fair value to CCHBC of approximately USD 44 million** (USD 164M call asset less USD 120M put liability), based on the 25% stake in CCBA with a total equity value of USD 3.2bn at SPA Completion. The estimate carries a simulation standard error of ±USD 0.7M (95% confidence interval) at 1,000,000 paths, which is below any practical materiality threshold.
 
 The valuation is robust across the sensitivity range tested. The primary risk to the net value is a significant reduction in USD risk-free rates.
 
