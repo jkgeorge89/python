@@ -1,0 +1,5 @@
+label,steps_per_year,tree_steps,state_step_pct,state_count,value_usd_m,per_share_usd,delta_vs_monthly_usd_m,delta_vs_monthly_pct
+"Current monthly tree, 1.0% state grid",12,72,1.0,20,140.936371,101.684226,0.0,0.0
+"Weekly tree, 1.0% state grid",52,312,1.0,20,141.856612,102.348171,0.920241,0.00652948
+"Business-day tree, 1.0% state grid",252,1512,1.0,20,142.061172,102.495759,1.124801,0.00798091
+"Business-day tree, 0.5% state grid",252,1512,0.5,38,142.061172,102.495759,1.124801,0.00798091

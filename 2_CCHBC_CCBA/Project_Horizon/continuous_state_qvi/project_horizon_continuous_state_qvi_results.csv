@@ -1,0 +1,4 @@
+label,steps_per_year,time_steps,state_step_pct,state_count,price_nodes,value_usd_m,per_share_usd,delta_vs_140_936m_usd_m,delta_vs_140_936m_pct,delta_vs_high_resolution_tree_usd_m,delta_vs_high_resolution_tree_pct
+"Daily QVI, 0.25% / 801 prices",252,1512,0.25,74,801,145.864092,105.239529,4.927721,0.03496416,3.80292,0.0267696
+"Daily QVI, 0.25% / 1001 prices",252,1512,0.25,74,1001,144.227058,104.058425,3.290687,0.02334874,2.165886,0.01524615
+"Daily QVI, 0.25% / 1201 prices",252,1512,0.25,74,1201,144.076408,103.949732,3.140037,0.02227982,2.015236,0.01418569
