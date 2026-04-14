@@ -40,7 +40,7 @@ The relevant parties are:
 | CCHBC | Coca-Cola HBC Holdings B.V. ("Olympus BV") | Acquiror; holder of the Call Option |
 | Titan | European Refreshments Unlimited Company, guaranteed by The Coca-Cola Company | Seller; holder of the Put Option |
 
-This memo is intended to be the separate valuation report for the current FULL model. It does **not** replace or edit the original proxy memo in `Project_Horizon_Option_Valuation.md`, which remains preserved separately as the initial economic approximation.
+This memo is intended to be the separate valuation report for the current FULL model. It does **not** replace or edit the original proxy memo in `../proxy/Project_Horizon_Option_Valuation.md`, which remains preserved separately as the initial economic approximation.
 
 ---
 
